@@ -1,8 +1,12 @@
 package com.rehnuma.springbootsecurity.model;
 
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.io.File;
+import java.security.AllPermission;
+import java.util.HashSet;
 import java.util.Set;
 @Entity
 @Table(name = "user")
@@ -11,34 +15,44 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
     private int id;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "contact")
     private String contact;
+
     @Column(name = "email")
     private String email;
+
     @Column(name = "password")
     private  String password;
 
+    @Transient
+    private String passwordConfirm;
 
-    @Column(name="active")
+     @Column(name="active")
     private int active;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+
+
+    @Column(name = "file_name")
+    private String file_name;
+
+
+
+    @Transient
+    private MultipartFile file;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_role",
+            joinColumns = {@JoinColumn (name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")}
+    )
+    private Set<Role> roles=new HashSet<>();
 
     public User(){
 
-    }
-
-    public User(String name, String email,String contact ,String password) {
-        super();
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.contact=contact;
-        //this.roles = roles;
     }
 
     public int getId() {
@@ -81,6 +95,23 @@ public class User {
         this.roles = roles;
     }
 
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public String getFile_name() {
+        return file_name;
+    }
+
+    public void setFile_name(String file_name) {
+        this.file_name = file_name;
+    }
+
     public int getActive() {
         return active;
     }
@@ -89,11 +120,34 @@ public class User {
         this.active = active;
     }
 
-    public String getContact() {
-        return contact;
+    public String getPasswordConfirm() {
+        return passwordConfirm;
     }
 
-    public void setContact(String contact) {
-        this.contact = contact;
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", contact='" + contact + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", passwordConfirm='" + passwordConfirm + '\'' +
+                ", active=" + active +
+                ", roles=" + roles +
+                '}';
     }
 }

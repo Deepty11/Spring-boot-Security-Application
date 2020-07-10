@@ -1,6 +1,7 @@
 package com.rehnuma.springbootsecurity.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "role")
@@ -9,14 +10,19 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "role_id")
     private int id;
+
+
+
     @Column(name = "name")
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private RoleType roleType;
+
 
     public Role() {
     }
 
-    public Role(String name) {
-        this.role = name;
+    public Role(RoleType roleType){
+        this.roleType=roleType;
     }
 
     public int getId() {
@@ -26,12 +32,13 @@ public class Role {
     public void setId(int id) {
         this.id = id;
     }
-
-    public String getName() {
-        return role;
+    public RoleType getRoleType() {
+        return roleType;
     }
 
-    public void setName(String name) {
-        this.role = name;
+    public void setRoleType(RoleType roleType) {
+        this.roleType = roleType;
     }
+
+
 }
