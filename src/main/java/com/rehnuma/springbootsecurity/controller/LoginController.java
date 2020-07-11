@@ -57,9 +57,10 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public String home(Model map){
+    public String home(Model map,HttpServletRequest request){
         User user=getLoggedInUser();
         map.addAttribute("user",user);
+        request.setAttribute("mode","MODE_HOMEPAGEMAIN");
         return "home";
     }
 }

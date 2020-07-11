@@ -7,3 +7,23 @@
 .userImage{
     transform: translateX(-15%);
 }
+.profile{
+    transform: translateY(40%)
+
+
+}
+.information{
+    text-align: center;
+}
+.profile-div{
+    text-align: center;
+}
+
+.profile-pic{
+    position: relative;
+    transform: translateX(40%);
+
+}
+.top{
+    margin-top: 10%;
+}
