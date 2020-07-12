@@ -50,6 +50,7 @@
         </div>
     </c:when>
     <c:when test="${mode=='MODE_REGISTRATION'}">
+
         <section class="testimonial py-5" id="testimonial" style="background: #0d0d0d">
             <div class="container">
                 <div class="row ">
