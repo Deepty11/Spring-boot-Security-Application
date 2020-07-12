@@ -55,7 +55,7 @@ public class UserController {
         StringBuilder fileName=new StringBuilder();
         Path path= Paths.get(uploadDirectory,file.getOriginalFilename());
         fileName.append(file.getOriginalFilename());
-        Files.write(path,file.getBytes()); //write the file in "upload directory
+
 
         user.setFile_name(fileName.toString());
 
@@ -69,10 +69,11 @@ public class UserController {
         }
 
         userServiceImp.saveUser(user);
+        Files.write(path,file.getBytes()); //write the file in "user_images" directory
         System.out.println("saved!");
         request.setAttribute("check","true");
         request.setAttribute("success","Registration is done successfully!");
-        request.setAttribute("mode","MODE_REGISTRATION");
+        request.setAttribute("mode","MODE_REGISTRATIONSUCCESSFUL");
         return "index";
     }
 
