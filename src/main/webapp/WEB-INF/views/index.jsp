@@ -9,6 +9,24 @@
 
 <head>
     <title>Index</title>
+    <style>
+        .card-img-custom {
+            background-image: url("resources/images/reg_photo.jpg");
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+
+        .idx-form-btn{
+            background-color: teal ;
+            color: white;
+        }
+
+        .login-left-img {
+            background-image: url("resources/images/login_image.jpg");
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+    </style>
 </head>
 
 <body>
@@ -16,7 +34,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-    <a class="navbar-brand" href="/"><img src="/resources/images/logo.jpg" alt="logo"  width="70" height="70"/></a>
+    <a class="navbar-brand" href="/"><img src="/resources/images/bloggers_mania.png" alt="logo"  width="70" height="70"/></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -50,27 +68,18 @@
         </div>
     </c:when>
     <c:when test="${mode=='MODE_REGISTRATION'}">
-        <section class="testimonial py-5" id="testimonial" style="background: #0d0d0d">
+        <section class="testimonial py-5" id="testimonial" style="background: rgba(100,102,88,0.73)">
             <div class="container">
                 <div class="row ">
-                    <div class="col-md-4 py-5 text-white text-center " style="background: teal">
-                        <div class=" ">
-                            <div class="card-body">
-                                <img class="img-circle" src="resources/images/reg.png" style="width:30%">
-                                <h2 class="py-3">Registration as Blogger</h2>
-                                <p>Fullfill Your Dream as a blogger... post whatever you like ... ta da !!
-
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="col-md-4 py-5 text-white text-center card-img-custom"></div>
                     <div class="col-md-8 py-5 border" style="background: white">
-                        <h4 class="pb-4">Please fill with your details</h4>
+                        <h2 class="form-signin-heading">Create your account</h2>
+
                         <c:if test="${check=='true'}">
                             <div class="alert alert-success"><c:out value="${success}"></c:out> </div>
                         </c:if>
                         <form:form method="POST" modelAttribute="user" class="form-signin" enctype="multipart/form-data">
-                            <h2 class="form-signin-heading">Create your account</h2>
+                            <h5 class="pb-4">Please fill with your details</h5>
                             <spring:bind path="name">
                                 <div class="form-group ${status.error ? 'has-error' : ''}">
                                     <form:input type="text" path="name" class="form-control" placeholder="Username"
@@ -110,69 +119,77 @@
 
 
                             <div class="form-group ${status.error ? 'has-error' : ''}">
-                                    <form:input type="file" path="file" class="form-control"
-                                                placeholder=" " ></form:input>
-
+                                    <form:input type="file" path="file" class="btn idx-form-btn"></form:input>
                             </div>
 
-
-                            <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+                            <div class="row">
+                                <div class="col-sm-3 pull-right">
+                                    <button class="btn idx-form-btn btn-block" type="submit">Submit</button>
+                                </div>
+                            </div>
                         </form:form>
-
                     </div>
                 </div>
             </div>
         </section>
-
     </c:when>
     <c:when test="${mode=='MODE_LOGIN'}">
-        <div class="container text-centered pt-3 login">
-            <div class=""><h1>Login</h1></div>
+        <section class="testimonial py-5" id="testimonial" style="background: rgba(100,102,88,0.73)">
+            <div class="container">
+                <div class="row ">
+                    <div class="col-md-4 py-5 text-white text-center login-left-img"></div>
+                    <div class="col-md-8 py-5 border" style="background: white">
+                        <div class=""><h1>Sign In</h1></div>
+                        <div class=""><h3>Fill out your credentials</h3></div>
+                        <c:if test="${not empty error}">
+                            <div class="alert alert-danger div-alert">
+                                <h6 class="alert-h1"><c:out value="${error}"></c:out></h6>
+                            </div>
+                        </c:if>
+                        <form method="POST" action="/doLogin" >
+                            <div class="form-group row">
+                                <span>${message}</span>
+                                <div class="col-sm-7">
+                                    <input type="email"
+                                           class="form-control"
+                                           name="email"
+                                           placeholder="Email"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-7">
+                                    <input type="password"
+                                           class="form-control"
+                                           name="password"
+                                           placeholder="Password"/>
+                                </div>
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <button type="submit" class="btn idx-form-btn">Login</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <a href="${contextPath}/registration" style="font-size: large; color: teal">
+                                        Create a new account
+                                    </a>
+                                </div>
+                            </div>
 
-            <c:if test="${not empty error}">
-                <div class="alert alert-danger div-alert ">
-                    <h6 class="alert-h1"><c:out value="${error}"></c:out></h6>
-                </div>
-            </c:if>
-            <form method="POST" action="/doLogin" class="form2"  >
-
-                <div class="form-group row">
-                    <span>${message}</span>
-                    <label  class="col-sm-2 col-form-label" >Email</label>
-                    <div class="col-sm-7">
-                        <input type="email"
-                               class="form-control"
-                               name="email"
-                               placeholder="Email"
-                        />
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <a href="${contextPath}/registration" style="font-size: large; color: teal">
+                                        Forgot Password?
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Password</label>
-                    <div class="col-sm-7">
-                        <input type="password"
-                               class="form-control"
-                               name="password"
-                               placeholder="Password"
-                        />
-                    </div>
-                        <%--                <span>${error}</span>--%>
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                </div>
-
-
-                <div class="form-group row">
-                    <div class="col-sm-2">
-                        <button type="submit" class="btn btn-primary">Login</button>
-
-                    </div >
-                    <div class="col-sm-7">
-                        <h5 class="text-center"><a href="${contextPath}/registration">Create an account</a></h5>
-                    </div>
-                </div>
-            </form>
-        </div>
-
+            </div>
+        </section>
     </c:when>
 </c:choose>
 
